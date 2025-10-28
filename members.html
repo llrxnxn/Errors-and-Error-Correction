@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Team</title>
+  <title>Team Members | Errors and Error Correction</title>
   <style>
     * {
       margin: 0;
@@ -15,117 +15,141 @@
     body {
       background-color: #0d0d0d;
       color: #00ffcc;
+      padding: 20px;
+    }
+
+    /* HEADER */
+    header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      text-align: center;
-      padding: 50px 20px;
+      padding: 15px 30px;
+      border-bottom: 2px solid #00ffcc;
     }
 
-    h1 {
-      font-size: 3rem;
-      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffaa;
-      animation: glitch 1.5s infinite;
-      margin-bottom: 10px;
+    header h1 {
+      font-size: 2rem;
+      text-shadow: 0 0 10px #00ffaa;
     }
 
-    @keyframes glitch {
-      0% { text-shadow: 2px 2px #ff0066; }
-      25% { text-shadow: -2px -2px #00ffcc; }
-      50% { text-shadow: 3px 3px #ff0066; }
-      75% { text-shadow: -3px 0 #00ffcc; }
-      100% { text-shadow: 2px -2px #ff0066; }
+    header h1 a {
+      color: #00ffcc;
+      text-decoration: none;
+      transition: 0.3s;
     }
 
-    p {
-      color: #aaaaaa;
-      font-size: 1.2rem;
-      margin-bottom: 40px;
+    header h1 a:hover {
+      color: #00ffaa;
+      text-shadow: 0 0 15px #00ffcc;
     }
 
+    .nav-buttons button {
+      background: transparent;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      padding: 10px 25px;
+      margin-left: 15px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #00ffcc;
+      color: #0d0d0d;
+      box-shadow: 0 0 15px #00ffcc;
+      transform: scale(1.05);
+    }
+
+    /* TEAM SECTION */
     .team-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 30px;
-      width: 100%;
       max-width: 900px;
+      margin: 60px auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      text-align: center;
     }
 
-    .member-card {
-      background: rgba(20, 20, 20, 0.9);
+    .member {
+      background: #111;
       border: 2px solid #00ffcc;
       border-radius: 12px;
-      padding: 25px;
-      transition: 0.3s;
+      padding: 30px 10px;
       box-shadow: 0 0 15px #00ffaa33;
+      transition: 0.3s;
     }
 
-    .member-card:hover {
+    .member:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 30px #00ffcc;
+      box-shadow: 0 0 25px #00ffcc;
     }
 
-    .member-card h2 {
+    .surname {
+      font-weight: bold;
+      color: #00ffcc;
+      font-size: 1.5rem;
+    }
+
+    .firstname {
+      font-weight: bold;
       color: #00ffcc;
       font-size: 1.5rem;
       margin-bottom: 10px;
     }
 
-    .member-card p {
-      font-size: 1rem;
+    .details {
       color: #cccccc;
+      font-size: 1rem;
+      letter-spacing: 2px;
     }
 
-    .buttons {
-      margin-top: 50px;
+    @media (max-width: 700px) {
+      .team-container {
+        grid-template-columns: 1fr;
+      }
     }
-
-    button {
-      background: transparent;
-      color: #00ffcc;
-      border: 3px solid #00ffcc;
-      padding: 10px 30px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: 0.3s;
-      border-radius: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    button:hover {
-      background-color: #00ffcc;
-      color: #0d0d0d;
-      box-shadow: 0 0 25px #00ffcc;
-      transform: scale(1.05);
-    }
-
   </style>
 </head>
 <body>
-  <h1>Meet the Team</h1>
-  <p>The minds behind "Errors and Error Correction"</p>
 
-  <div class="team-container">
-    <div class="member-card">
-      <h2>Arnado, Aristhea Lyn</h2>
-      <p>BSIT - NS - 3A</p>
+  <!-- HEADER -->
+  <header>
+    <h1><a href="index.html">Errors and Error Correction</a></h1>
+    <div class="nav-buttons">
+      <button onclick="location.href='topics.html'">Topics</button>
+      <button onclick="location.href='actual_quiz.html'">Quiz</button>
+      <button onclick="location.href='members.html'">Members</button>
     </div>
-    <div class="member-card">
-      <h2>Arboleda, Jan Ernest</h2>
-      <p>BSIT - NS - 3A</p>
+  </header>
+
+  <!-- TEAM MEMBERS -->
+  <section class="team-container">
+    <div class="member">
+      <div class="surname">Arnado,</div>
+      <div class="firstname">Aristhea Lyn</div>
+      <div class="details">BSIT - NS - 3A</div>
     </div>
-    <div class="member-card">
-      <h2>Balucan, Casey Althea</h2>
-      <p>BSIT - NS - 3A</p>
+
+    <div class="member">
+      <div class="surname">Arboleda,</div>
+      <div class="firstname">Jan Ernest</div>
+      <div class="details">BSIT - NS - 3A</div>
     </div>
-    <div class="member-card">
-      <h2>Crueta, Al Samuel</h2>
-      <p>BSIT - NS - 3A</p>
+
+    <div class="member">
+      <div class="surname">Balucan,</div>
+      <div class="firstname">Casey Althea</div>
+      <div class="details">BSIT - NS - 3A</div>
     </div>
-  </div>
+
+    <div class="member">
+      <div class="surname">Crueta,</div>
+      <div class="firstname">Al Samuel</div>
+      <div class="details">BSIT - NS - 3A</div>
+    </div>
+  </section>
 
 </body>
 </html>
