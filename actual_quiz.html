@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Error Detection and Correction Quiz</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Courier New", monospace;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      color: #00ffcc;
+      padding: 30px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      border-bottom: 2px solid #00ffcc;
+    }
+
+    header h1 a {
+      color: #00ffcc;
+      text-decoration: none;
+      font-size: 2rem;
+      text-shadow: 0 0 10px #00ffaa;
+      transition: 0.3s;
+    }
+
+    header h1 a:hover {
+      color: #00ffaa;
+      text-shadow: 0 0 15px #00ffcc;
+    }
+
+    .nav-buttons button {
+      background: transparent;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      padding: 8px 20px;
+      margin-left: 15px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #00ffcc;
+      color: #0d0d0d;
+      box-shadow: 0 0 15px #00ffcc;
+      transform: scale(1.05);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffaa;
+    }
+
+    .question {
+      display: none;
+      margin-bottom: 25px;
+      color: #e0e0e0;
+    }
+
+    .question.active {
+      display: block;
+    }
+
+    .question p {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .choice-btn {
+      display: block;
+      width: 100%;
+      background: transparent;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: left;
+    }
+
+    .choice-btn:hover {
+      background-color: #00ffcc;
+      color: #0d0d0d;
+      box-shadow: 0 0 10px #00ffcc;
+      transform: scale(1.02);
+    }
+
+    .selected {
+      background-color: #00ffcc !important;
+      color: #0d0d0d !important;
+      box-shadow: 0 0 10px #00ffaa;
+    }
+
+    .submit-btn, .view-answers-btn {
+      margin: 20px auto 0;
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      background: transparent;
+      border: 2px solid #00ffcc;
+      color: #00ffcc;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: none;
+    }
+
+    .submit-btn:hover, .view-answers-btn:hover {
+      background-color: #00ffcc;
+      color: #0d0d0d;
+      box-shadow: 0 0 20px #00ffcc;
+      transform: scale(1.05);
+    }
+
+    .result {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.5rem;
+      margin-top: 10px;
+      color: #00ffaa;
+      text-shadow: 0 0 10px #00ffcc;
+      padding: 10px 0;
+      border-top: 1px solid #00ffcc;
+    }
+
+    .surname-input {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 25px;
+    }
+
+    .surname-input input {
+      background-color: #000;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 8px;
+      border-radius: 6px;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    /* ✅ View Answers Layout */
+    .answers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .answer-box {
+      border: 1px solid #00ffcc;
+      border-radius: 10px;
+      padding: 15px;
+      background-color: #0a0a0a;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+    }
+
+    .answer-box p {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .user-wrong {
+      border: 2px solid #ff3366;
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .correct-border {
+      border: 2px solid #00ffaa;
+      padding: 8px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="landing_page.html">Errors and Error Correction</a></h1>
+    <div class="nav-buttons">
+      <button onclick="location.href='topics.html'">Topics</button>
+      <button onclick="location.href='actual_quiz.html'">Quiz</button>
+      <button onclick="location.href='members.html'">Members</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Error Detection and Correction — 20-Item Quiz</h2>
+
+    <div class="surname-input" id="surnameSection">
+      <label for="surname">Enter your Surname:</label>
+      <input type="text" id="surname" required>
+    </div>
+
+    <div id="quiz"></div>
+
+    <div id="result"></div>
+    <button class="view-answers-btn" id="viewAnswersBtn">View Correct Answers</button>
+  </div>
+
+  <script>
+    const quizData = [
+      { q: "Which of the following best describes an error in data transmission?", a: ["A delay in sending data", "A mismatch between transmitted and received data", "The compression of data before transmission", "The encryption of data for security"], correct: 1 },
+      { q: "It refers to the process of determining whether an error has occurred during data transmission or storage.", a: ["Error Correction", "Error Detection", "Parity Check", "CRC"], correct: 1 },
+      { q: "Which of the following techniques can both detect and correct single-bit errors?", a: ["Parity Check", "Checksum", "Hamming Code", "Cyclic Redundancy Check (CRC)"], correct: 2 },
+      { q: "Parity Check can detect both single-bit and multiple-bit errors accurately.", a: ["True", "False"], correct: 1 },
+      { q: "Which of the following is a common cause of errors in data communication systems?", a: ["Strong signal strength", "Electrical noise or interference", "Efficient synchronization", "High bandwidth capacity"], correct: 1 },
+      { q: "Which error type involves two or more consecutive bits being altered during transmission?", a: ["Random Error", "Single-bit Error", "Burst Error", "Systematic Error"], correct: 2 },
+      { q: "This error correction method requires the receiver to request retransmission of corrupted data frames.", a: ["Parity Check", "Automatic Repeat Request (ARQ)", "Checksum", "Forward Error Correction"], correct: 1 },
+      { q: "Which of the following is NOT an error detection technique?", a: ["Parity Check", "Checksum", "CRC", "Convolutional Code"], correct: 3 },
+      { q: "Which of the following best describes the main purpose of error correction?", a: ["To compress data before transmission", "To ensure data remains accurate and reliable", "To reduce the data transmission rate", "To encrypt data for privacy"], correct: 1 },
+      { q: "Which of the following statements correctly distinguishes FEC from ARQ?", a: ["FEC requests retransmission", "ARQ and FEC both detect errors only", "FEC corrects errors without retransmission", "Both detect but not correct"], correct: 2 },
+      { q: "What type of error occurs when only one bit in a data unit changes?", a: ["Burst error", "Random error", "Single-bit error", "Systematic error"], correct: 2 },
+      { q: "In a parity check system, what does the parity bit ensure?", a: ["The data is encrypted", "The total count of 1s is either even or odd", "All bits are the same value", "The data is compressed"], correct: 1 },
+      { q: "What is one major limitation of using simple parity or checksum methods?", a: ["They can detect all errors", "They require large redundancy", "They can only detect errors but not correct them", "They need complex hardware"], correct: 2 },
+      { q: "Which error detection method is commonly used in TCP/IP protocols?", a: ["Parity check", "Hamming code", "Checksum", "CRC only"], correct: 2 },
+      { q: "Why might advanced error correction methods like CRC or Hamming slow down a system?", a: ["They require extra computation", "They reduce storage space", "They eliminate redundancy", "They ignore multiple-bit errors"], correct: 0 },
+      { q: "In Stop-and-Wait ARQ, what happens after sending a frame?", a: ["Sender sends next frame", "Sender waits for ACK/NACK", "Sender sends multiple frames", "Receiver corrects errors automatically"], correct: 1 },
+      { q: "What is the Hamming (7,4) code?", a: ["Encodes 7 bits into 4 bits", "Encodes 4 data bits into 7 bits", "Uses 7 parity bits for 4 data bits", "A compression algorithm"], correct: 1 },
+      { q: "What is the main advantage of Selective Repeat ARQ over Go-Back-N ARQ?", a: ["Simpler to implement", "Retransmits only erroneous frames", "Doesn't need ACKs", "Faster always"], correct: 1 },
+      { q: "What does FEC stand for in error correction?", a: ["Fast Error Calculation", "Forward Error Correction", "File Error Check", "Fixed Encoding Code"], correct: 1 },
+      { q: "What is one trade-off when designing an error-control system?", a: ["Zero redundancy = perfect accuracy", "Balance speed, accuracy, cost", "More redundancy = faster transmission", "Less correction = more reliability"], correct: 1 }
+    ];
+
+    const quizContainer = document.getElementById('quiz');
+    const resultDiv = document.getElementById('result');
+    const viewAnswersBtn = document.getElementById('viewAnswersBtn');
+    const surnameInput = document.getElementById('surname');
+    const surnameSection = document.getElementById('surnameSection');
+
+    let currentQuestion = 0;
+    let score = 0;
+    const answers = [];
+
+    function showQuestion(index) {
+      quizContainer.innerHTML = '';
+      const q = quizData[index];
+      const qDiv = document.createElement('div');
+      qDiv.classList.add('question', 'active');
+      qDiv.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${q.q}</p>`;
+
+      q.a.forEach((choice, i) => {
+        const btn = document.createElement('button');
+        btn.classList.add('choice-btn');
+        btn.textContent = choice;
+        btn.onclick = () => handleAnswer(i, index, btn, qDiv);
+        qDiv.appendChild(btn);
+      });
+
+      quizContainer.appendChild(qDiv);
+    }
+
+    function handleAnswer(i, index, btn, qDiv) {
+      answers[index] = i;
+      const allBtns = qDiv.querySelectorAll('.choice-btn');
+      allBtns.forEach(b => b.disabled = true);
+
+      btn.classList.add('selected');
+      if (i === quizData[index].correct) score++;
+
+      // If not last question, move next
+      if (index < quizData.length - 1) {
+        setTimeout(() => nextQuestion(), 400);
+      } else {
+        // Show Submit button for last question
+        const submitBtn = document.createElement('button');
+        submitBtn.textContent = "Submit Quiz";
+        submitBtn.classList.add('submit-btn');
+        submitBtn.style.display = "block";
+        submitBtn.onclick = submitQuiz;
+        qDiv.appendChild(submitBtn);
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) showQuestion(currentQuestion);
+    }
+
+    function submitQuiz() {
+      const surname = surnameInput.value.trim();
+      if (!surname) {
+        alert("Please enter your surname before submitting.");
+        return;
+      }
+
+      // Hide surname input section
+      surnameSection.style.display = 'none';
+
+      // Show result at top
+      resultDiv.innerHTML = `
+        <div class="result">
+          <span>${surname}</span>
+          <span>Score: ${score} / ${quizData.length}</span>
+        </div>
+      `;
+
+      quizContainer.innerHTML = '';
+      viewAnswersBtn.style.display = 'block';
+    }
+
+    viewAnswersBtn.onclick = () => {
+      quizContainer.innerHTML = '';
+      const answersGrid = document.createElement('div');
+      answersGrid.classList.add('answers-grid');
+
+      quizData.forEach((q, i) => {
+        const box = document.createElement('div');
+        box.classList.add('answer-box');
+
+        if (answers[i] === q.correct) {
+          box.innerHTML = `
+            <p><strong>Q${i + 1}:</strong> ${q.q}</p>
+            <p class="correct-border">✅ ${q.a[q.correct]}</p>
+          `;
+        } else {
+          box.innerHTML = `
+            <p><strong>Q${i + 1}:</strong> ${q.q}</p>
+            <p class="user-wrong">❌ ${q.a[answers[i]] || "No answer"}</p>
+            <p class="correct-border">✅ ${q.a[q.correct]}</p>
+          `;
+        }
+        answersGrid.appendChild(box);
+      });
+
+      quizContainer.appendChild(answersGrid);
+      viewAnswersBtn.style.display = 'none';
+      resultDiv.scrollIntoView({ behavior: "smooth" });
+    };
+
+    showQuestion(currentQuestion);
+  </script>
+</body>
+</html>

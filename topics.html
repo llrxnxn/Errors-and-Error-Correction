@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topics | Errors and Error Correction</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Courier New", monospace;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      color: #00ffcc;
+      padding: 20px;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      border-bottom: 2px solid #00ffcc;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      text-shadow: 0 0 10px #00ffaa;
+    }
+
+    /* Keep title always green even if it's a link */
+    header h1 a {
+      color: #00ffcc;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    header h1 a:visited,
+    header h1 a:active {
+      color: #00ffcc;
+    }
+
+    header h1 a:hover {
+      color: #00ffaa;
+      text-shadow: 0 0 15px #00ffcc;
+    }
+
+    .nav-buttons button {
+      background: transparent;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      padding: 10px 25px;
+      margin-left: 15px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #00ffcc;
+      color: #0d0d0d;
+      box-shadow: 0 0 15px #00ffcc;
+      transform: scale(1.05);
+    }
+
+    /* PAGE NAVIGATION */
+    .page-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 25px;
+      border-bottom: 2px solid #00ffaa;
+      padding-bottom: 10px;
+    }
+
+    .tab {
+      font-size: 1.3rem;
+      color: #aaaaaa;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .tab:hover {
+      color: #00ffaa;
+    }
+
+    .tab.active {
+      color: #00ffcc;
+    }
+
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: #00ffcc;
+      border-radius: 2px;
+    }
+
+    /* CONTENT AREA */
+    .content {
+      max-width: 1000px;
+      margin: 40px auto;
+      font-size: 1.2rem;
+      line-height: 1.7;
+      color: #e0e0e0;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+    }
+
+    h2 {
+      color: #00ffcc;
+      margin-bottom: 10px;
+      text-shadow: 0 0 5px #00ffaa;
+    }
+
+    ul {
+      margin-left: 30px;
+      list-style: square;
+    }
+
+    hr {
+      margin: 30px 0;
+      border: 0;
+      border-top: 1px solid #333;
+    }
+
+    pre {
+      background-color: #000;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <h1><a href="landing_page.html">Errors and Error Correction</a></h1>
+    <div class="nav-buttons">
+      <button onclick="location.href='topics.html'">Topics</button>
+      <button onclick="location.href='actual_quiz.html'">Quiz</button>
+      <button onclick="location.href='members.html'">Members</button>
+    </div>
+  </header>
+
+  <!-- PAGE NAVIGATION -->
+  <div class="page-tabs">
+    <span class="tab active" onclick="showPage(1)">Introduction</span>
+    <span class="tab" onclick="showPage(2)">Techniques</span>
+    <span class="tab" onclick="showPage(3)">Applications</span>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content" id="page-content">
+    <!-- Page 1 will show by default -->
+  </div>
+
+  <script>
+    const pages = {
+      1: `
+        <h2>1. Introduction</h2>
+        <p>In any system where information is transmitted, stored, or processed — whether it’s a computer program, a data transmission network, or human communication — errors can occur. Error correction refers to methods used to detect and correct those errors so the original message or data remains accurate and reliable.</p>
+
+        <h2>2. What is an Error?</h2>
+        <p>An error is any unintended change or deviation from the correct or expected value. It represents a mismatch between the transmitted and received data, or between the intended and actual output.</p>
+
+        <pre>
+Example:
+Original message: 1011001
+Received message: 1011101
+→ one bit changed (0 → 1) — this is an error.
+        </pre>
+
+        <h2>3. Causes of Errors</h2>
+        <p><strong>In Communication Systems:</strong></p>
+        <ul>
+          <li>Electrical noise or interference</li>
+          <li>Weak signals</li>
+          <li>Crosstalk between channels</li>
+          <li>Physical damage to cables or storage media</li>
+          <li>Synchronization problems</li>
+        </ul>
+        <p><strong>In Computing or Programming:</strong></p>
+        <ul>
+          <li>Human mistakes in coding</li>
+          <li>Hardware faults (e.g., memory corruption)</li>
+          <li>Software bugs or logic errors</li>
+          <li>Transmission delays or packet loss</li>
+        </ul>
+        <p><strong>In Human Language (Linguistics):</strong> grammar mistakes, typos, and misinterpretations can be viewed as errors in a communication context.</p>
+      `,
+      2: `
+        <h2>4. Types of Errors</h2>
+      <ul>
+        <li><strong>Single-bit error</strong> — only one bit in a data unit changes.<br>
+        <em>Example:</em> 1011001 → 1011101</li>
+
+        <li><strong>Burst error</strong> — two or more bits change, often consecutively.<br>
+        <em>Example:</em> 1011001 → 1110001</li>
+
+        <li><strong>Random error</strong> — unpredictable, caused by random noise.<br>
+        <em>Example:</em> 1011001 → 1010001</li>
+
+        <li><strong>Systematic error</strong> — consistent flaw (e.g., miscalibration).<br>
+        <em>Example:</em> 1011001 → 1011101</li>
+      </ul>
+
+        <h2>5. Error Detection Techniques</h2>
+      <p>Error detection tells us whether an error happened; it might not say how to fix it.</p>
+
+      <p><strong>A. Parity Check</strong><br>
+      Adds one parity bit so the total count of 1s is either even (even parity) or odd (odd parity). Simple but can only detect an odd number of bit errors.</p>
+      <pre>
+        Even Parity Example: 1010001 → 10100011
+        Odd Parity Example: 1010 → 10101
+      </pre>
+
+      <p><strong>B. Checksum</strong><br>
+      The sender calculates a numeric summary of the data (the checksum) and sends it along with the data.
+      The receiver performs the same calculation and compares results. Commonly used in TCP/IP and transport layer protocols.</p>
+      <pre>
+        Example:
+        Data bits: 10101001 → 11001100
+        Sum: 373 → Send as checksum
+      </pre>
+
+      <p><strong>C. Cyclic Redundancy Check (CRC)</strong><br>
+      Uses polynomial division to generate a CRC code appended to the message. Highly reliable and can detect burst errors. Used in Ethernet, storage devices, and file integrity checks.</p>
+      <pre>
+        Data bits: 1101
+        Divisor: 1011
+        CRC Result: 100
+      </pre>
+
+      <p><strong>D. Hamming Code (Detection & Correction)</strong><br>
+      Adds redundant bits at specific positions in the data.
+      Can detect and correct single-bit errors, and detect (but not correct) certain multiple-bit errors.</p>
+      <pre>
+        Data bits: 1011
+        Transmission Code: 0110011
+      </pre>
+
+        <h2>6. Error Correction Techniques</h2>
+
+      <p><strong>A. Forward Error Correction (FEC)</strong><br>
+      The sender adds structured redundancy so the receiver can correct errors without asking for retransmission.</p>
+      <p><em>Examples:</em> Hamming codes, Reed–Solomon (used in CDs, DVDs, QR codes), convolutional codes, and turbo codes (used in wireless).</p>
+
+      <p><strong>B. Automatic Repeat Request (ARQ)</strong><br>
+      Receiver detects errors and requests retransmission from the sender.</p>
+      <ul>
+        <li><strong>Stop-and-Wait ARQ</strong> — send one frame, wait for ACK/NACK.</li>
+        <li><strong>Go-Back-N ARQ</strong> — send several frames; on error, retransmit from the failed frame onward.</li>
+        <li><strong>Selective Repeat ARQ</strong> — retransmit only frames that were erroneous.</li>
+      </ul>
+    `,
+
+      3: `
+        <h2>7. Example — Hamming (7,4) Code</h2>
+        <p>Hamming (7,4) encodes 4 data bits into 7 bits by adding 3 parity bits. Example layout (positions numbered 1..7): parity bits occupy positions 1, 2, and 4.</p>
+
+        <table style="
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        background-color: #1a1a2e;
+        color: #fff;
+        border: 1px solid #3f3f7d;
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+        ">
+        <thead style="background-color: #2a2a4a;">
+            <tr>
+            <th style="padding: 10px; border: 1px solid #3f3f7d;">Data bits (d3 d2 d1 d0)</th>
+            <th style="padding: 10px; border: 1px solid #3f3f7d;">Redundant bits (r1 r2 r4)</th>
+            <th style="padding: 10px; border: 1px solid #3f3f7d;">Transmitted 7-bit code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td style="padding: 10px; border: 1px solid #3f3f7d;">1 0 1 1</td>
+            <td style="padding: 10px; border: 1px solid #3f3f7d;">r1 r2 r4</td>
+            <td style="padding: 10px; border: 1px solid #3f3f7d;">1 0 1 1 0 0 1</td>
+            </tr>
+        </tbody>
+        </table>
+
+        <p style="margin-top: 15px;">
+        If a single bit flips during transmission, the parity-check pattern across the parity bits points to the exact bit position to flip back — allowing correction.
+        </p>
+
+      <h2>8. Applications</h2>
+      <ul>
+        <li>Networking: Wi-Fi, Ethernet, cellular networks</li>
+        <li>Storage: Hard drives, SSDs, optical media</li>
+        <li>Digital communication: Satellite, optical fiber</li>
+        <li>File transfer protocols: FTP, HTTP, etc.</li>
+        <li>Media and compression: Smooth audio/video playback.</li>
+        <li>Programming: Error-handling and debugging</li>
+      </ul>
+
+      <h2>9. Importance of Error Correction</h2>
+      <ul>
+        <li>Maintains data accuracy and reliability</li>
+        <li>Prevents information loss</li>
+        <li>Improves system performance</li>
+        <li>Reduces retransmissions — saves time and bandwidth.</li>
+        <li>Essential for critical systems (banking, healthcare)</li>
+      </ul>
+
+      <h2>10. Limitations of Error Detection and Correction</h2>
+      <p>While these methods are powerful, they also have certain limitations:</p>
+
+      <ul>
+        <li><strong>Redundancy Overhead:</strong><br>
+        Adding extra bits (like parity or CRC) increases the size of transmitted data. This can reduce transmission efficiency or take up more storage space.</li>
+
+        <li><strong>Computation Cost:</strong><br>
+        Complex techniques such as CRC and Hamming require additional processing power, which can slow down real-time systems.</li>
+
+        <li><strong>Detection Without Correction:</strong><br>
+        Some methods (e.g., simple parity or checksum) can only detect errors but cannot correct them.</li>
+
+        <li><strong>Multiple-Bit Errors:</strong><br>
+        Many codes (like Hamming) are only designed for single-bit error correction, making them less effective for burst errors.</li>
+
+        <li><strong>Trade-Offs:</strong><br>
+        Designers must balance speed, accuracy, and cost depending on the application — for example, simple systems may use parity, while critical systems use advanced codes like Reed–Solomon.</li>
+      </ul>
+
+      <h2>11. Conclusion</h2>
+      <p>Errors are inevitable, but with detection and correction techniques — from simple parity checks to advanced FEC schemes — systems achieve reliable communication and maintain data integrity.</p>
+    `
+  };
+
+    function showPage(num) {
+      document.getElementById("page-content").innerHTML = pages[num];
+      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+      document.querySelector(`.tab:nth-child(${num})`).classList.add("active");
+    }
+
+    // Load first page by default
+    showPage(1);
+  </script>
+</body>
+</html>
