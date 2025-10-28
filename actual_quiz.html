@@ -164,7 +164,6 @@
       font-size: 1rem;
     }
 
-    /* ✅ View Answers Layout */
     .answers-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -223,7 +222,7 @@
   </div>
 
   <script>
-    const quizData = [
+    const quizData = [ /* same quizData as before */ 
       { q: "Which of the following best describes an error in data transmission?", a: ["A delay in sending data", "A mismatch between transmitted and received data", "The compression of data before transmission", "The encryption of data for security"], correct: 1 },
       { q: "It refers to the process of determining whether an error has occurred during data transmission or storage.", a: ["Error Correction", "Error Detection", "Parity Check", "CRC"], correct: 1 },
       { q: "Which of the following techniques can both detect and correct single-bit errors?", a: ["Parity Check", "Checksum", "Hamming Code", "Cyclic Redundancy Check (CRC)"], correct: 2 },
@@ -256,6 +255,18 @@
     let score = 0;
     const answers = [];
 
+    // ✅ Check if already taken
+    const storedSurname = localStorage.getItem('quizSurname');
+    const storedScore = localStorage.getItem('quizScore');
+
+    if (storedSurname && storedScore) {
+      // Already taken
+      surnameSection.style.display = 'none';
+      quizContainer.innerHTML = `<p style="text-align:center; font-size:1.3rem;">You already took this quiz, <strong>${storedSurname}</strong>.<br>Your score: ${storedScore} / ${quizData.length}</p>`;
+    } else {
+      showQuestion(currentQuestion);
+    }
+
     function showQuestion(index) {
       quizContainer.innerHTML = '';
       const q = quizData[index];
@@ -278,15 +289,12 @@
       answers[index] = i;
       const allBtns = qDiv.querySelectorAll('.choice-btn');
       allBtns.forEach(b => b.disabled = true);
-
       btn.classList.add('selected');
       if (i === quizData[index].correct) score++;
 
-      // If not last question, move next
       if (index < quizData.length - 1) {
         setTimeout(() => nextQuestion(), 400);
       } else {
-        // Show Submit button for last question
         const submitBtn = document.createElement('button');
         submitBtn.textContent = "Submit Quiz";
         submitBtn.classList.add('submit-btn');
@@ -308,17 +316,16 @@
         return;
       }
 
-      // Hide surname input section
-      surnameSection.style.display = 'none';
+      localStorage.setItem('quizSurname', surname);
+      localStorage.setItem('quizScore', score);
 
-      // Show result at top
+      surnameSection.style.display = 'none';
       resultDiv.innerHTML = `
         <div class="result">
           <span>${surname}</span>
           <span>Score: ${score} / ${quizData.length}</span>
         </div>
       `;
-
       quizContainer.innerHTML = '';
       viewAnswersBtn.style.display = 'block';
     }
@@ -351,8 +358,6 @@
       viewAnswersBtn.style.display = 'none';
       resultDiv.scrollIntoView({ behavior: "smooth" });
     };
-
-    showQuestion(currentQuestion);
   </script>
 </body>
 </html>
